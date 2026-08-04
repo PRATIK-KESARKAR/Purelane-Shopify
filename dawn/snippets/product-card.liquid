@@ -1,0 +1,116 @@
+{% liquid
+  assign badge = product.metafields.custom.badge.value
+  assign rating = product.metafields.custom.rating.value
+  assign review_count = product.metafields.custom.review_count.value
+
+  assign compare_price = product.compare_at_price
+  assign current_price = product.price
+
+  assign discount = 0
+
+  if compare_price > current_price
+    assign difference = compare_price | minus: current_price
+    assign discount = difference | times: 100 | divided_by: compare_price
+  endif
+%}
+
+<article class="glass card">
+
+  <a href="{{ product.url }}" class="card-image">
+
+    {% if badge != blank %}
+      <span class="pill">
+        {{ badge }}
+      </span>
+    {% endif %}
+
+    {% if product.featured_image %}
+      {{
+        product.featured_image
+        | image_url: width: 700
+        | image_tag:
+          loading: 'lazy',
+          widths: '250,400,600,700',
+          alt: product.title
+      }}
+    {% else %}
+      <div class="card-placeholder">
+        No Image
+      </div>
+    {% endif %}
+
+  </a>
+
+  <h4>
+    <a href="{{ product.url }}">
+      {{ product.title }}
+    </a>
+  </h4>
+
+  {% if rating %}
+    <div class="rate">
+
+      <strong>
+        ★ {{ rating }}
+      </strong>
+
+      {% if review_count %}
+        · {{ review_count }} reviews
+      {% endif %}
+
+    </div>
+  {% endif %}
+
+  <div class="pr">
+
+    <strong>
+
+      {{ product.price | money }}
+
+    </strong>
+
+    {% if compare_price > current_price %}
+
+      <s>
+
+        {{ compare_price | money }}
+
+      </s>
+
+      <em>
+
+        {{ discount }}% off
+
+      </em>
+
+    {% endif %}
+
+  </div>
+
+  {% form 'product', product %}
+
+    <input
+      type="hidden"
+      name="id"
+      value="{{ product.selected_or_first_available_variant.id }}"
+    >
+
+    <button
+      type="submit"
+      class="btn btn-ghost btn-sm"
+      {% unless product.available %}
+        disabled
+      {% endunless %}
+    >
+
+      {% if product.available %}
+        Add to cart
+      {% else %}
+        Sold Out
+      {% endif %}
+
+    </button>
+
+  {% endform %}
+
+</article>
