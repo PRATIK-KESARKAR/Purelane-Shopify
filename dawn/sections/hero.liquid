@@ -1,0 +1,265 @@
+{%- comment -%}
+  PURELANE: Hero Section
+  Interactive product stage, glass badges, and cinematic typography.
+{%- endcomment -%}
+
+<div class="hero" id="hero" data-scene="1" data-scene="1">
+  <div class="hero-grid">
+    
+    <div class="hero-copy">
+      <div class="rule rv rv-d1">
+        <i></i>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.4 7.6H22l-6.2 4.5 2.4 7.6-6.2-4.5-6.2 4.5 2.4-7.6-6.2-4.5h7.6z"/></svg>
+        <i></i>
+      </div>
+      
+      <h1 class="d1 rv rv-d2">
+        {{ section.settings.heading }}
+      </h1>
+      
+      <p class="lede rv rv-d3">
+        {{ section.settings.description }}
+      </p>
+
+      {%- if section.settings.primary_label != blank or section.settings.secondary_label != blank -%}
+        <div class="hero-cta rv rv-d4">
+          {%- if section.settings.primary_label != blank -%}
+            <a href="{{ section.settings.primary_link }}" class="btn btn-primary">
+              {{ section.settings.primary_label }}
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+          {%- endif -%}
+          
+          {%- if section.settings.secondary_label != blank -%}
+            <a href="{{ section.settings.secondary_link }}" class="btn btn-ghost">
+              {{ section.settings.secondary_label }}
+            </a>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+
+      <div class="badgestrip rv rv-d5">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'badge' -%}
+            <div class="glass-2">
+              {%- case block.settings.icon -%}
+                {%- when 'leaf' -%}
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg>
+                {%- when 'shield' -%}
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                {%- when 'ban' -%}
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg>
+              {%- endcase -%}
+              {{ block.settings.text }}
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+    
+  </div>
+
+  <div class="hero-prod" id="heroProd">
+    <div class="hstage" id="hstage">
+      
+      {%- assign slide_idx = 0 -%}
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'hero_slide' -%}
+          <div class="hslide hs{{ slide_idx | plus: 1 }} {% if slide_idx == 0 %}on{% endif %}">
+            
+            {%- comment -%} 
+              We use static CSS background images here to match the prototype's highly tuned SVG art,
+              but we let the merchant define the pricing and labels.
+            {%- endcomment -%}
+
+            {%- assign slide_products = block.settings.product_list -%}
+            {%- if false and slide_products != blank -%}
+              {%- for prod in slide_products limit: 3 -%}
+                {%- assign pclass = 'a d1' -%}
+                {%- if forloop.index0 == 1 -%}{%- assign pclass = 'b d2' -%}{%- endif -%}
+                {%- if forloop.index0 == 2 -%}{%- assign pclass = 'c d3' -%}{%- endif -%}
+                {%- if prod.featured_image -%}
+                  <img class="hp pimg {{ pclass }}" src="{{ prod.featured_image | image_url: width: 400 }}" alt="{{ prod.title }}" loading="lazy">
+                {%- endif -%}
+              {%- endfor -%}
+            {%- else -%}
+              {%- comment -%} Fallback if no products selected {%- endcomment -%}
+              {%- if slide_idx == 0 -%}
+                <div class="hp pimg p-combo2 a d1"></div>
+              {%- elsif slide_idx == 1 -%}
+                <div class="hp pimg p-handwash a d1"></div>
+                <div class="hp pimg p-dish b d2"></div>
+              {%- elsif slide_idx == 2 -%}
+                <div class="hp pimg p-floor a d1"></div>
+                <div class="hp pimg p-toilet b d2"></div>
+                <div class="hp pimg p-laundry c d3"></div>
+              {%- endif -%}
+            {%- endif -%}
+
+            <div class="ptag glass">
+              <span class="lbl">{{ block.settings.label }}</span>
+              <div class="val">
+                <strong>{{ block.settings.price }}</strong>
+                {%- if block.settings.compare_price != blank -%}
+                  <s>{{ block.settings.compare_price }}</s>
+                {%- endif -%}
+              </div>
+              {%- if block.settings.discount_label != blank -%}
+                <span class="cut">{{ block.settings.discount_label }}</span>
+              {%- endif -%}
+            </div>
+          </div>
+          {%- assign slide_idx = slide_idx | plus: 1 -%}
+        {%- endif -%}
+      {%- endfor -%}
+
+    </div>
+
+    <div class="hdots" id="hdots">
+      {%- assign dot_idx = 0 -%}
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'hero_slide' -%}
+          <button type="button" aria-label="Slide {{ dot_idx | plus: 1 }}" class="{% if dot_idx == 0 %}on{% endif %}"></button>
+          {%- assign dot_idx = dot_idx | plus: 1 -%}
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+  
+  <div class="badges glass-2">
+    {%- for block in section.blocks -%}
+      {%- if block.type == 'badge' -%}
+        <div class="badge">
+          <div class="bi">
+            {%- case block.settings.icon -%}
+              {%- when 'leaf' -%}
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg>
+              {%- when 'shield' -%}
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              {%- when 'ban' -%}
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg>
+            {%- endcase -%}
+          </div>
+          <span>{{ block.settings.text }}</span>
+        </div>
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+
+</div>
+
+{% schema %}
+{
+  "name": "Hero",
+  "settings": [
+    {
+      "type": "html",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Clean<br>That<br><span class=\"lime\">Lasts</span>"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "Plant-powered home care that actually works. Tough on stains, gentle on your family, packaged to cut plastic waste."
+    },
+    {
+      "type": "text",
+      "id": "primary_label",
+      "label": "Primary Button Label",
+      "default": "Shop Bestsellers"
+    },
+    {
+      "type": "url",
+      "id": "primary_link",
+      "label": "Primary Button Link"
+    },
+    {
+      "type": "text",
+      "id": "secondary_label",
+      "label": "Secondary Button Label",
+      "default": "Build a bundle"
+    },
+    {
+      "type": "url",
+      "id": "secondary_link",
+      "label": "Secondary Button Link"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "badge",
+      "name": "Feature Badge",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "options": [
+            { "value": "leaf", "label": "Plant" },
+            { "value": "shield", "label": "Shield" },
+            { "value": "ban", "label": "Crossed" }
+          ],
+          "default": "leaf"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "100% Plant based"
+        }
+      ]
+    },
+    {
+      "type": "hero_slide",
+      "name": "Product Slide",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Small Label",
+          "default": "Starter Kit"
+        },
+        {
+          "type": "product_list",
+          "id": "product_list",
+          "label": "Products to show as bottles",
+          "limit": 3
+        },
+        {
+          "type": "text",
+          "id": "price",
+          "label": "Price",
+          "default": "₹899"
+        },
+        {
+          "type": "text",
+          "id": "compare_price",
+          "label": "Compare Price",
+          "default": "₹1,199"
+        },
+        {
+          "type": "text",
+          "id": "discount_label",
+          "label": "Discount Pill",
+          "default": "Save ₹300"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero",
+      "blocks": [
+        { "type": "badge", "settings": { "icon": "leaf", "text": "100% Plant based" } },
+        { "type": "badge", "settings": { "icon": "ban", "text": "Zero toxins" } },
+        { "type": "badge", "settings": { "icon": "shield", "text": "Baby safe" } },
+        { "type": "hero_slide", "settings": { "label": "Starter Kit", "price": "₹899", "compare_price": "₹1,199", "discount_label": "Save ₹300" } },
+        { "type": "hero_slide", "settings": { "label": "Kitchen + Bath", "price": "₹599", "compare_price": "₹799", "discount_label": "Save ₹200" } },
+        { "type": "hero_slide", "settings": { "label": "Whole Home", "price": "₹1,299", "compare_price": "₹1,899", "discount_label": "Save ₹600" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
