@@ -1,116 +1,73 @@
-{% liquid
-  assign badge = product.metafields.custom.badge.value
-  assign rating = product.metafields.custom.rating.value
-  assign review_count = product.metafields.custom.review_count.value
+{%- comment -%}
+  Renders a product card for the Purelane grid.
+  Accepts:
+  - product: {Object} Product Liquid object
+  - idx: {Number} loop index for animation delay
+{%- endcomment -%}
 
-  assign compare_price = product.compare_at_price
-  assign current_price = product.price
+{%- assign sold_out = false -%}
+{%- if product.available == false -%}
+  {%- assign sold_out = true -%}
+{%- endif -%}
 
-  assign discount = 0
+{%- assign compare = product.compare_at_price -%}
+{%- assign price = product.price -%}
+{%- assign discount = 0 -%}
+{%- if compare > price -%}
+  {%- assign discount = compare | minus: price | times: 100.0 | divided_by: compare | round -%}
+{%- endif -%}
 
-  if compare_price > current_price
-    assign difference = compare_price | minus: current_price
-    assign discount = difference | times: 100 | divided_by: compare_price
-  endif
-%}
+{%- assign delay = idx | modulo: 4 | plus: 1 -%}
 
-<article class="glass card">
+<article class="glass card rv rv-d{{ delay }}">
+  
+  <a href="{{ product.url }}" class="shot" aria-hidden="true" tabindex="-1">
+    
+    {%- if product.metafields.purelane.badge_label != blank -%}
+      <span class="pill">{{ product.metafields.purelane.badge_label }}</span>
+    {%- endif -%}
+    
+    {%- if sold_out -%}
+      <span class="pill pill--sold-out">Sold out</span>
+    {%- endif -%}
 
-  <a href="{{ product.url }}" class="card-image">
-
-    {% if badge != blank %}
-      <span class="pill">
-        {{ badge }}
-      </span>
-    {% endif %}
-
-    {% if product.featured_image %}
-      {{
-        product.featured_image
-        | image_url: width: 700
-        | image_tag:
-          loading: 'lazy',
-          widths: '250,400,600,700',
-          alt: product.title
-      }}
-    {% else %}
-      <div class="card-placeholder">
-        No Image
-      </div>
-    {% endif %}
-
+    {%- if product.featured_image -%}
+      {{ product.featured_image | image_url: width: 400 | image_tag: loading: 'lazy', alt: product.title }}
+    {%- else -%}
+      <span class="no-img-placeholder">No Image</span>
+    {%- endif -%}
+    
   </a>
 
-  <h4>
-    <a href="{{ product.url }}">
-      {{ product.title }}
-    </a>
-  </h4>
+  <h4><a href="{{ product.url }}">{{ product.title }}</a></h4>
 
-  {% if rating %}
+  {%- if product.metafields.reviews.rating != blank -%}
     <div class="rate">
-
-      <strong>
-        ★ {{ rating }}
-      </strong>
-
-      {% if review_count %}
-        · {{ review_count }} reviews
-      {% endif %}
-
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="14" height="14"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      <b>{{ product.metafields.reviews.rating.value }}</b> 
+      <span>({{ product.metafields.reviews.rating_count.value }})</span>
     </div>
-  {% endif %}
+  {%- endif -%}
 
   <div class="pr">
-
-    <strong>
-
-      {{ product.price | money }}
-
-    </strong>
-
-    {% if compare_price > current_price %}
-
-      <s>
-
-        {{ compare_price | money }}
-
-      </s>
-
-      <em>
-
-        {{ discount }}% off
-
-      </em>
-
-    {% endif %}
-
+    <strong>{{ price | money }}</strong>
+    {%- if compare > price -%}
+      <s>{{ compare | money }}</s>
+      <em>{{ discount }}% OFF</em>
+    {%- endif -%}
   </div>
 
-  {% form 'product', product %}
-
-    <input
-      type="hidden"
-      name="id"
-      value="{{ product.selected_or_first_available_variant.id }}"
-    >
-
-    <button
-      type="submit"
-      class="btn btn-ghost btn-sm"
-      {% unless product.available %}
-        disabled
-      {% endunless %}
-    >
-
-      {% if product.available %}
-        Add to cart
-      {% else %}
-        Sold Out
-      {% endif %}
-
-    </button>
-
-  {% endform %}
+  <div class="btn-wrap">
+    {%- if sold_out -%}
+      <button class="btn btn-ghost btn-sm btn--disabled" disabled>Sold out</button>
+    {%- else -%}
+      {%- form 'product', product -%}
+        <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+        <button type="submit" class="btn btn-ghost btn-sm" data-product-id="{{ product.id }}">
+          Add to cart
+        </button>
+      {%- endform -%}
+    {%- endif -%}
+  </div>
 
 </article>
