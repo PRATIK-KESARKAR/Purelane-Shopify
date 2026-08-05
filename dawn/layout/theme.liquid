@@ -1,36 +1,174 @@
 <!doctype html>
 <html lang="{{ request.locale.iso_code }}">
-  <head>
-    {% # Inlined CSS Variables %}
-    {% render 'css-variables' %}
+<head>
 
-    {% comment %}
-      Font preloading:
-      1. Preconnect to font CDN for faster connection
-      2. Preload only the critical font variant (base weight)
-      3. Additional variants load on-demand via @font-face
-    {% endcomment %}
-    {% unless settings.type_primary_font.system? %}
-      <link rel="preconnect" href="https://fonts.shopifycdn.com" crossorigin>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#1ea38d">
+  <title>
+    {{ page_title }}
+    {%- if current_tags %} &ndash; tagged "{{ current_tags | join: ', ' }}"{% endif -%}
+    {%- if current_page != 1 %} &ndash; Page {{ current_page }}{% endif -%}
+    {%- unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless -%}
+  </title>
 
-      {% comment %} Preload the base font variant for initial page render {% endcomment %}
-      {{ settings.type_primary_font | font_url | preload_tag: as: 'font', crossorigin: 'anonymous' }}
-    {% endunless %}
+  {% if page_description %}
+    <meta name="description" content="{{ page_description | escape }}">
+  {% endif %}
 
-    {% # Load and preload the critical CSS %}
-    {{ 'critical.css' | asset_url | stylesheet_tag: preload: true }}
+  <link rel="canonical" href="{{ canonical_url }}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    {% # Social, title, etc. %}
-    {% render 'meta-tags' %}
+  {{ content_for_header }}
 
-    {{ content_for_header }}
-  </head>
+  {{ 'purelane.css' | asset_url | stylesheet_tag }}
 
-  <body>
-    {% sections 'header-group' %}
+</head>
 
+<body>
+
+  {%- comment -%} ===== BACKGROUND SCENES (cinematic scroll-driven gradient) ===== {%- endcomment -%}
+  <div class="scenes" id="scenes" data-d="1" aria-hidden="true">
+    <div class="scene s1 on"></div>
+    <div class="scene s2"></div>
+    <div class="scene s3"></div>
+    <div class="scene s4"></div>
+
+    <div class="water" id="water">
+      <div class="wl wl-a">
+        <svg class="sv" viewBox="0 0 1800 1100" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <defs>
+            <linearGradient id="cg-a" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0" stop-color="#eafff4" stop-opacity="0"/>
+              <stop offset=".18" stop-color="#f2fff8" stop-opacity=".95"/>
+              <stop offset=".5" stop-color="#ffffff" stop-opacity="1"/>
+              <stop offset=".82" stop-color="#e6fbef" stop-opacity=".9"/>
+              <stop offset="1" stop-color="#eafff4" stop-opacity="0"/>
+            </linearGradient>
+            <filter id="wf-a" x="-12%" y="-12%" width="124%" height="124%" color-interpolation-filters="sRGB">
+              <feTurbulence type="fractalNoise" baseFrequency="0.0022 0.019" numOctaves="3" seed="21" result="n"/>
+              <feDisplacementMap in="SourceGraphic" in2="n" scale="72" xChannelSelector="R" yChannelSelector="G"/>
+            </filter>
+          </defs>
+          <g filter="url(#wf-a)">
+            <path d="M262 230 Q372 261 482 238 Q592 247 702 250 Q812 210 923 235 Q1033 201 1143 213 Q1253 232 1363 215 Q1473 261 1583 238" stroke="url(#cg-a)" stroke-width="1.7" fill="none" opacity="0.45" stroke-linecap="round"/>
+            <path d="M137 256 Q307 242 477 258 Q646 238 816 245 Q985 259 1155 247 Q1324 277 1494 262" stroke="url(#cg-a)" stroke-width="5.1" fill="none" opacity="0.23" stroke-linecap="round"/>
+            <path d="M389 715 Q514 756 639 725 Q763 738 888 742 Q1013 688 1138 721 Q1262 674 1387 692" stroke="url(#cg-a)" stroke-width="5.7" fill="none" opacity="0.37" stroke-linecap="round"/>
+            <path d="M140 308 Q297 310 454 302 Q611 321 769 312 Q926 314 1083 316 Q1240 298 1397 309" stroke="url(#cg-a)" stroke-width="5.5" fill="none" opacity="0.47" stroke-linecap="round"/>
+            <path d="M570 422 Q687 462 805 437 Q922 436 1039 446 Q1156 391 1274 423 Q1391 388 1508 398" stroke="url(#cg-a)" stroke-width="2.3" fill="none" opacity="0.25" stroke-linecap="round"/>
+            <path d="M229 990 Q390 1026 551 1018 Q712 974 873 1006 Q1034 944 1195 972" stroke="url(#cg-a)" stroke-width="6.1" fill="none" opacity="0.36" stroke-linecap="round"/>
+          </g>
+        </svg>
+      </div>
+      <div class="wl wl-b">
+        <svg class="sv" viewBox="0 0 1800 1100" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <defs>
+            <linearGradient id="cg-b" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0" stop-color="#eafff4" stop-opacity="0"/>
+              <stop offset=".18" stop-color="#f2fff8" stop-opacity=".95"/>
+              <stop offset=".5" stop-color="#ffffff" stop-opacity="1"/>
+              <stop offset=".82" stop-color="#e6fbef" stop-opacity=".9"/>
+              <stop offset="1" stop-color="#eafff4" stop-opacity="0"/>
+            </linearGradient>
+            <filter id="wf-b" x="-12%" y="-12%" width="124%" height="124%" color-interpolation-filters="sRGB">
+              <feTurbulence type="fractalNoise" baseFrequency="0.005 0.031" numOctaves="2" seed="47" result="n"/>
+              <feDisplacementMap in="SourceGraphic" in2="n" scale="46" xChannelSelector="R" yChannelSelector="G"/>
+            </filter>
+          </defs>
+          <g filter="url(#wf-b)">
+            <path d="M355 217 Q442 234 529 234 Q616 202 703 222 Q790 190 877 203 Q964 215 1051 202" stroke="url(#cg-b)" stroke-width="3.4" fill="none" opacity="0.17" stroke-linecap="round"/>
+            <path d="M160 723 Q278 720 396 713 Q514 738 633 725 Q751 735 869 734 Q987 715 1105 728" stroke="url(#cg-b)" stroke-width="1.1" fill="none" opacity="0.17" stroke-linecap="round"/>
+            <path d="M539 -36 Q653 -22 766 -30 Q880 -32 994 -28 Q1108 -47 1221 -36" stroke="url(#cg-b)" stroke-width="1.5" fill="none" opacity="0.34" stroke-linecap="round"/>
+            <path d="M105 872 Q196 867 287 878 Q379 858 470 866 Q561 868 652 864" stroke="url(#cg-b)" stroke-width="2.0" fill="none" opacity="0.21" stroke-linecap="round"/>
+          </g>
+        </svg>
+      </div>
+      <div class="wl wl-c">
+        <svg class="sv" viewBox="0 0 1800 1100" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <defs>
+            <linearGradient id="sg" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#f4fff9" stop-opacity=".85"/>
+              <stop offset=".38" stop-color="#dcf6e7" stop-opacity=".28"/>
+              <stop offset="1" stop-color="#d4f2e2" stop-opacity="0"/>
+            </linearGradient>
+          </defs>
+          <g>
+            <polygon points="95,-80 152,-80 517,1180 439,1180" fill="url(#sg)" opacity="0.26"/>
+            <polygon points="433,-80 491,-80 885,1180 807,1180" fill="url(#sg)" opacity="0.41"/>
+            <polygon points="751,-80 919,-80 1180,1180 953,1180" fill="url(#sg)" opacity="0.31"/>
+            <polygon points="1048,-80 1135,-80 1400,1180 1282,1180" fill="url(#sg)" opacity="0.28"/>
+            <polygon points="1366,-80 1520,-80 1898,1180 1690,1180" fill="url(#sg)" opacity="0.28"/>
+          </g>
+        </svg>
+      </div>
+      <div class="wl wl-s">
+        <svg class="sv" viewBox="0 0 1800 1100" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <defs>
+            <linearGradient id="sf" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#ffffff" stop-opacity=".55"/>
+              <stop offset=".55" stop-color="#e8fff2" stop-opacity=".16"/>
+              <stop offset="1" stop-color="#e8fff2" stop-opacity="0"/>
+            </linearGradient>
+            <filter id="sfw" x="-10%" y="-40%" width="120%" height="180%" color-interpolation-filters="sRGB">
+              <feTurbulence type="fractalNoise" baseFrequency="0.004 0.05" numOctaves="2" seed="9" result="n"/>
+              <feDisplacementMap in="SourceGraphic" in2="n" scale="30" xChannelSelector="R" yChannelSelector="G"/>
+            </filter>
+          </defs>
+          <g filter="url(#sfw)">
+            <rect x="-100" y="-40" width="2000" height="150" fill="url(#sf)"/>
+            <rect x="-100" y="60" width="2000" height="60" fill="url(#sf)" opacity=".5"/>
+          </g>
+        </svg>
+      </div>
+
+      <div class="bub" aria-hidden="true">
+        <span style="--x:91.9%;--s:6.7px;--dur:21.5s;--dly:19.0s;--drift:-11px"></span>
+        <span style="--x:43.4%;--s:5.7px;--dur:26.8s;--dly:16.1s;--drift:-11px"></span>
+        <span style="--x:6.0%;--s:3.6px;--dur:24.4s;--dly:10.6s;--drift:3px"></span>
+        <span style="--x:70.3%;--s:3.3px;--dur:20.9s;--dly:9.2s;--drift:-39px"></span>
+        <span style="--x:67.7%;--s:4.0px;--dur:27.0s;--dly:16.5s;--drift:-5px"></span>
+        <span style="--x:2.1%;--s:7.1px;--dur:22.0s;--dly:3.1s;--drift:-37px"></span>
+        <span style="--x:64.1%;--s:8.2px;--dur:17.3s;--dly:9.0s;--drift:2px"></span>
+        <span style="--x:21.8%;--s:7.1px;--dur:15.7s;--dly:18.4s;--drift:-13px"></span>
+        <span style="--x:52.5%;--s:3.3px;--dur:20.2s;--dly:19.6s;--drift:-31px"></span>
+        <span style="--x:11.1%;--s:7.9px;--dur:20.4s;--dly:10.8s;--drift:-40px"></span>
+        <span style="--x:18.6%;--s:9.0px;--dur:24.5s;--dly:8.7s;--drift:13px"></span>
+      </div>
+    </div>
+
+    <div class="vig" aria-hidden="true"></div>
+  </div>
+
+  {%- comment -%} ===== SECTION PROGRESS RAIL ===== {%- endcomment -%}
+  <nav class="rail" aria-label="Section progress">
+    <a href="#hero" class="on" aria-label="Hero"></a>
+    <a href="#reviews" aria-label="Reviews"></a>
+    <a href="#shop" aria-label="Shop"></a>
+    <a href="#combos" aria-label="Combos"></a>
+    <a href="#bundles" aria-label="Bundles"></a>
+  </nav>
+
+  {% section 'announcement-bar' %}
+  {% section 'header' %}
+
+  <main id="MainContent" role="main" tabindex="-1">
     {{ content_for_layout }}
+  </main>
 
-    {% sections 'footer-group' %}
-  </body>
+  {% section 'footer' %}
+
+  {%- comment -%} ===== STICKY MOBILE CTA ===== {%- endcomment -%}
+  <div class="sticky" aria-label="Bundle offer">
+    <span class="lbl">
+      <b>Pick any 3, pay ₹499</b>
+      <span>Free shipping, always</span>
+    </span>
+    <a class="btn btn-primary btn-sm" href="#bundles">Build bundle</a>
+  </div>
+
+  <script src="{{ 'purelane.js' | asset_url }}" defer></script>
+
+</body>
 </html>
