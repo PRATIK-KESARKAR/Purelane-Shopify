@@ -1,0 +1,94 @@
+{%- comment -%}
+  PURELANE: Full Range Section
+{%- endcomment -%}
+
+<div class="sec" id="range">
+  <div class="wrap">
+    <div class="glass range rv">
+      <div class="range-head">
+        <div>
+          <span class="kicker">{{ section.settings.kicker }}</span>
+          <h2 class="d2" style="margin-top:10px">{{ section.settings.title }}</h2>
+        </div>
+        <p class="body-s" style="max-width:34ch;margin-bottom:4px">{{ section.settings.text }}</p>
+      </div>
+      <div class="stripwrap">
+        <div class="rangerow">
+          {%- for block in section.blocks -%}
+            <span class="pimg {{ block.settings.image_class }}" role="img" aria-label="{{ block.settings.alt_text }}" {{ block.shopify_attributes }}></span>
+          {%- endfor -%}
+        </div>
+      </div>
+      <p class="striphint">{{ section.settings.hint_text }}</p>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Full Range",
+  "settings": [
+    {
+      "type": "text",
+      "id": "kicker",
+      "label": "Kicker",
+      "default": "The full range"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Every room, one shelf"
+    },
+    {
+      "type": "textarea",
+      "id": "text",
+      "label": "Description",
+      "default": "Floors, taps, kitchen, laundry, bathroom and hands. Fourteen plant-based formulas that replace every harsh bottle under your sink."
+    },
+    {
+      "type": "text",
+      "id": "hint_text",
+      "label": "Swipe Hint",
+      "default": "Swipe to see the full shelf"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "product_image",
+      "name": "Product Image",
+      "settings": [
+        {
+          "type": "text",
+          "id": "image_class",
+          "label": "CSS Class (e.g. p-floor)",
+          "default": "p-floor"
+        },
+        {
+          "type": "text",
+          "id": "alt_text",
+          "label": "Alt Text",
+          "default": "Purelane product"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Full Range",
+      "blocks": [
+        { "type": "product_image", "settings": { "image_class": "p-floor", "alt_text": "Purelane natural herbal floor cleaner" } },
+        { "type": "product_image", "settings": { "image_class": "p-tap", "alt_text": "Purelane tap cleaner and limescale remover" } },
+        { "type": "product_image", "settings": { "image_class": "p-kitchen", "alt_text": "Purelane foaming kitchen cleaner" } },
+        { "type": "product_image", "settings": { "image_class": "p-toilet", "alt_text": "Purelane non-toxic toilet cleaner" } },
+        { "type": "product_image", "settings": { "image_class": "p-laundry", "alt_text": "Purelane natural laundry detergent" } },
+        { "type": "product_image", "settings": { "image_class": "p-dish", "alt_text": "Purelane organic dishwash liquid gel" } },
+        { "type": "product_image", "settings": { "image_class": "p-metal", "alt_text": "Purelane copper, bronze and brass cleaner" } },
+        { "type": "product_image", "settings": { "image_class": "p-wm", "alt_text": "Purelane washing machine cleaner and descaler" } },
+        { "type": "product_image", "settings": { "image_class": "p-handwash", "alt_text": "Purelane gentle hydrating liquid handwash" } },
+        { "type": "product_image", "settings": { "image_class": "p-eraser", "alt_text": "Purelane magic eraser" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

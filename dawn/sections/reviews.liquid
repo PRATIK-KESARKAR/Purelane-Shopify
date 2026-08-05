@@ -1,0 +1,158 @@
+{%- comment -%}
+  PURELANE: Reviews Marquee Section
+{%- endcomment -%}
+
+<div class="revband" id="reviews" data-scene="1">
+  <div class="revhead rv rv-d1">
+    <span class="st">★★★★★</span>
+    <span class="agg"><b>{{ section.settings.aggregate_rating }}</b> ({{ section.settings.review_count }} reviews)</span>
+    <span class="agg">Trusted by {{ section.settings.homes_count }} Indian homes</span>
+  </div>
+
+  <div class="revrail rv rv-d2">
+    <div class="revtrack" style="--marq-dur: {{ section.settings.animation_speed }}s; {% unless section.settings.pause_on_hover %}pointer-events: none;{% endunless %}">
+      
+      {%- comment -%} We render the track twice for seamless infinite scrolling {%- endcomment -%}
+      {%- for block in section.blocks -%}
+        {% render 'review-card', block: block %}
+      {%- endfor -%}
+
+      {%- for block in section.blocks -%}
+        {% render 'review-card', block: block %}
+      {%- endfor -%}
+
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Reviews Marquee",
+  "settings": [
+    {
+      "type": "text",
+      "id": "aggregate_rating",
+      "label": "Aggregate Rating",
+      "default": "4.8"
+    },
+    {
+      "type": "text",
+      "id": "review_count",
+      "label": "Review Count",
+      "default": "8,000+"
+    },
+    {
+      "type": "text",
+      "id": "homes_count",
+      "label": "Homes Count",
+      "default": "12 lakh+"
+    },
+    {
+      "type": "range",
+      "id": "animation_speed",
+      "min": 20,
+      "max": 100,
+      "step": 4,
+      "unit": "s",
+      "label": "Marquee Speed",
+      "default": 52
+    },
+    {
+      "type": "checkbox",
+      "id": "pause_on_hover",
+      "label": "Pause on hover",
+      "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Review",
+      "settings": [
+        {
+          "type": "range",
+          "id": "rating",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "label": "Rating",
+          "default": 5
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Review Title",
+          "default": "Finally a cleaner that works"
+        },
+        {
+          "type": "textarea",
+          "id": "body",
+          "label": "Review Body",
+          "default": "I love that it's safe for my baby but still removes tough kitchen grease."
+        },
+        {
+          "type": "text",
+          "id": "reviewer_name",
+          "label": "Reviewer Name",
+          "default": "Priya S."
+        },
+        {
+          "type": "text",
+          "id": "product_name",
+          "label": "Product",
+          "default": "Kitchen Cleaner"
+        },
+        {
+          "type": "checkbox",
+          "id": "verified",
+          "label": "Verified Purchase",
+          "default": true
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Reviews Marquee",
+      "blocks": [
+        {
+          "type": "review",
+          "settings": {
+            "title": "Absolutely love it!",
+            "body": "The lavender smell is divine. My floors have never looked better.",
+            "reviewer_name": "Ananya K.",
+            "product_name": "Floor Cleaner"
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "title": "Tough on grease",
+            "body": "Cleaned my chiminey filter in 5 minutes flat. Magic.",
+            "reviewer_name": "Rahul M.",
+            "product_name": "Kitchen Cleaner"
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "title": "Baby safe & effective",
+            "body": "I don't have to worry when my toddler crawls on the floor anymore.",
+            "reviewer_name": "Sneha P.",
+            "product_name": "Starter Kit"
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "title": "No more hard water stains",
+            "body": "The bathroom cleaner is incredible. Wiped away 2 year old stains.",
+            "reviewer_name": "Vikram D.",
+            "product_name": "Bathroom Cleaner"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

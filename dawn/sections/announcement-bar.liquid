@@ -1,0 +1,29 @@
+{%- if section.settings.show_announcement -%}
+  <div class="ticker">
+    <div class="track" aria-hidden="true">
+      {%- for i in (1..8) -%}
+        <span>{{ section.settings.text }}</span>
+      {%- endfor -%}
+    </div>
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Announcement bar",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_announcement",
+      "label": "Show announcement",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "text",
+      "label": "Text",
+      "default": "<b>New:</b> Lavender Floor Cleaner is here! ✨"
+    }
+  ]
+}
+{% endschema %}

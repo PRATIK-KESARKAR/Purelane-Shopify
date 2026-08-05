@@ -1,0 +1,15 @@
+assets/
+    featured-products.css
+    hero.css
+    bundles.css
+    reviews.css
+
+sections/
+    hero.liquid
+    featured-products.liquid
+    combos.liquid
+    bundles.liquid
+    reviews.liquid
+
+snippets/
+    product-card.liquid

@@ -1,0 +1,238 @@
+{%- comment -%}
+  PURELANE: Tier Pricing / Bundles Section
+{%- endcomment -%}
+
+<div class="sec sec-pad" id="bundles" data-scene="3">
+  <div class="wrap">
+    
+    <div class="panel-head rv rv-d1">
+      <span class="kicker">{{ section.settings.kicker }}</span>
+      <h2 class="d2">{{ section.settings.heading }}</h2>
+      <div class="rule"><i></i><i></i></div>
+      {%- if section.settings.description != blank -%}
+        <p class="lede" style="margin: 20px auto 0;">{{ section.settings.description }}</p>
+      {%- endif -%}
+    </div>
+
+    <div class="tiers">
+      {%- assign delay = 2 -%}
+      {%- for block in section.blocks -%}
+        <article class="glass tier {% if block.settings.is_featured %}best{% endif %} rv rv-d{{ delay }}">
+          
+          {%- if block.settings.tag != blank -%}
+            <span class="tag">{{ block.settings.tag }}</span>
+          {%- endif -%}
+
+          <div class="tierpix {% if block.settings.product_count >= 5 %}five{% endif %}">
+            {%- if block.settings.product_images != blank -%}
+              {%- for prod in block.settings.product_images -%}
+                {%- if prod.featured_image -%}
+                  <img class="pimg" src="{{ prod.featured_image | image_url: width: 160 }}" alt="{{ prod.title }}" loading="lazy" width="160" height="160">
+                {%- endif -%}
+              {%- endfor -%}
+            {%- else -%}
+              {%- comment -%} Fallbacks based on count {%- endcomment -%}
+              {%- if block.settings.product_count == 2 -%}
+                <div class="pimg p-kbtl"></div>
+                <div class="pimg p-mbtl"></div>
+              {%- elsif block.settings.product_count == 3 -%}
+                <div class="pimg p-mbtl"></div>
+                <div class="pimg p-kbtl"></div>
+                <div class="pimg p-tbtl"></div>
+              {%- else -%}
+                <div class="pimg p-mbtl"></div>
+                <div class="pimg p-tbtl"></div>
+                <div class="pimg p-combo2"></div>
+                <div class="pimg p-kbtl"></div>
+                <div class="pimg p-laundry"></div>
+              {%- endif -%}
+            {%- endif -%}
+          </div>
+
+          <div class="qty">
+            {{ block.settings.product_count }}
+            <small>Products</small>
+          </div>
+
+          <div class="price">
+            {{ block.settings.price }}
+            {%- if block.settings.compare_price != blank -%}
+              <s>{{ block.settings.compare_price }}</s>
+            {%- endif -%}
+          </div>
+
+          {%- if block.settings.per_product_note != blank -%}
+            <p class="sub" style="font-size: 13px; color: var(--paper-3);">{{ block.settings.per_product_note }}</p>
+          {%- endif -%}
+
+          <ul>
+            {%- if block.settings.feature_1 != blank -%}
+              <li><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> {{ block.settings.feature_1 }}</li>
+            {%- endif -%}
+            {%- if block.settings.feature_2 != blank -%}
+              <li><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> {{ block.settings.feature_2 }}</li>
+            {%- endif -%}
+            {%- if block.settings.feature_3 != blank -%}
+              <li><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> {{ block.settings.feature_3 }}</li>
+            {%- endif -%}
+          </ul>
+
+          <a href="{{ block.settings.cta_link | default: '#' }}" class="btn btn-primary">{{ block.settings.cta_label }}</a>
+
+        </article>
+        {%- assign delay = delay | plus: 1 -%}
+      {%- endfor -%}
+    </div>
+
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Bundles (Tier Pricing)",
+  "settings": [
+    {
+      "type": "text",
+      "id": "kicker",
+      "label": "Kicker",
+      "default": "Build your bundle"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "One box. Every room."
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "Mix and match your favorite products and save up to 25%."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "tier",
+      "name": "Pricing Tier",
+      "limit": 3,
+      "settings": [
+        {
+          "type": "text",
+          "id": "tag",
+          "label": "Tag (e.g. Starter, Most Popular)"
+        },
+        {
+          "type": "checkbox",
+          "id": "is_featured",
+          "label": "Featured (Gold Border)",
+          "default": false
+        },
+        {
+          "type": "range",
+          "id": "product_count",
+          "min": 2,
+          "max": 10,
+          "step": 1,
+          "label": "Number of Products",
+          "default": 3
+        },
+        {
+          "type": "product_list",
+          "id": "product_images",
+          "label": "Products to show as stacked images"
+        },
+        {
+          "type": "text",
+          "id": "price",
+          "label": "Bundle Price",
+          "default": "₹499"
+        },
+        {
+          "type": "text",
+          "id": "compare_price",
+          "label": "Compare Price",
+          "default": "₹599"
+        },
+        {
+          "type": "text",
+          "id": "per_product_note",
+          "label": "Per Product Note",
+          "default": "Just ₹166/bottle"
+        },
+        {
+          "type": "text",
+          "id": "feature_1",
+          "label": "Feature 1",
+          "default": "Any 3 cleaners"
+        },
+        {
+          "type": "text",
+          "id": "feature_2",
+          "label": "Feature 2",
+          "default": "Free shipping"
+        },
+        {
+          "type": "text",
+          "id": "feature_3",
+          "label": "Feature 3"
+        },
+        {
+          "type": "text",
+          "id": "cta_label",
+          "label": "Button Label",
+          "default": "Build Bundle"
+        },
+        {
+          "type": "url",
+          "id": "cta_link",
+          "label": "Button Link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Bundles",
+      "blocks": [
+        {
+          "type": "tier",
+          "settings": {
+            "tag": "Starter",
+            "product_count": 2,
+            "price": "₹399",
+            "compare_price": "₹499",
+            "per_product_note": "Just ₹199/bottle",
+            "feature_1": "Any 2 cleaners"
+          }
+        },
+        {
+          "type": "tier",
+          "settings": {
+            "tag": "Most Popular",
+            "is_featured": true,
+            "product_count": 3,
+            "price": "₹499",
+            "compare_price": "₹699",
+            "per_product_note": "Just ₹166/bottle",
+            "feature_1": "Any 3 cleaners",
+            "feature_2": "Free shipping"
+          }
+        },
+        {
+          "type": "tier",
+          "settings": {
+            "tag": "Whole Home",
+            "product_count": 5,
+            "price": "₹799",
+            "compare_price": "₹1,099",
+            "per_product_note": "Just ₹159/bottle",
+            "feature_1": "Any 5 cleaners",
+            "feature_2": "Free shipping",
+            "feature_3": "Free spray bottle"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

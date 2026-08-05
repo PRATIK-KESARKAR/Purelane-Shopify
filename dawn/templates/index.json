@@ -1,36 +1,217 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- * ------------------------------------------------------------
- */
 {
   "sections": {
     "hero": {
       "type": "hero",
+      "blocks": {
+        "badge_1": { "type": "badge", "settings": { "icon": "leaf", "text": "100% Plant based" } },
+        "badge_2": { "type": "badge", "settings": { "icon": "ban", "text": "Zero toxins" } },
+        "badge_3": { "type": "badge", "settings": { "icon": "shield", "text": "Baby safe" } },
+        "slide_1": { "type": "hero_slide", "settings": { "label": "Starter Kit", "price": "₹899", "compare_price": "₹1,199", "discount_label": "Save ₹300" } },
+        "slide_2": { "type": "hero_slide", "settings": { "label": "Kitchen + Bath", "price": "₹599", "compare_price": "₹799", "discount_label": "Save ₹200" } },
+        "slide_3": { "type": "hero_slide", "settings": { "label": "Whole Home", "price": "₹1,299", "compare_price": "₹1,899", "discount_label": "Save ₹600" } }
+      },
+      "block_order": ["badge_1", "badge_2", "badge_3", "slide_1", "slide_2", "slide_3"],
+      "settings": {}
+    },
+    "reviews": {
+      "type": "reviews",
+      "blocks": {
+        "r1": { "type": "review", "settings": { "title": "Absolutely love it!", "body": "The lavender smell is divine. My floors have never looked better.", "reviewer_name": "Ananya K.", "product_name": "Floor Cleaner" } },
+        "r2": { "type": "review", "settings": { "title": "Tough on grease", "body": "Cleaned my chiminey filter in 5 minutes flat. Magic.", "reviewer_name": "Rahul M.", "product_name": "Kitchen Cleaner" } },
+        "r3": { "type": "review", "settings": { "title": "Baby safe & effective", "body": "I don't have to worry when my toddler crawls on the floor anymore.", "reviewer_name": "Sneha P.", "product_name": "Starter Kit" } },
+        "r4": { "type": "review", "settings": { "title": "No more hard water stains", "body": "The bathroom cleaner is incredible. Wiped away 2 year old stains.", "reviewer_name": "Vikram D.", "product_name": "Bathroom Cleaner" } }
+      },
+      "block_order": ["r1", "r2", "r3", "r4"],
+      "settings": {}
+    },
+    "ingredients": {
+      "type": "ingredients",
+      "blocks": {
+        "i1": { "type": "ingredient", "settings": { "icon": "coconut", "title": "Coconut", "text": "Plant-derived cleansers that lift grease" } },
+        "i2": { "type": "ingredient", "settings": { "icon": "orange", "title": "Orange peel", "text": "Natural degreaser and fresh citrus lift" } },
+        "i3": { "type": "ingredient", "settings": { "icon": "soapnut", "title": "Soap nut", "text": "A traditional plant foaming agent" } },
+        "i4": { "type": "ingredient", "settings": { "icon": "neem", "title": "Neem", "text": "Time-tested antibacterial from the tree" } },
+        "i5": { "type": "ingredient", "settings": { "icon": "lemongrass", "title": "Lemongrass", "text": "Clean fragrance with nothing synthetic" } }
+      },
+      "block_order": ["i1", "i2", "i3", "i4", "i5"],
+      "settings": {}
+    },
+    "pillars": {
+      "type": "pillars",
+      "blocks": {
+        "p1": { "type": "pillar", "settings": { "icon": "bubbles", "title": "Less scrubbing", "text": "A foaming formulation. The foam clings to grease and lifts it, so you wipe instead of scrub.", "button_label": "Learn more" } },
+        "p2": { "type": "pillar", "settings": { "icon": "shield", "title": "Clean ingredients", "text": "No sulphates, no chlorine, no synthetic fragrance. Nothing on the label you would not want near your food.", "button_label": "Learn more" } },
+        "p3": { "type": "pillar", "settings": { "icon": "heart", "title": "Safe around everyone", "text": "Gentle on hands, safe around kids and pets, and it leaves no toxic residue on the surfaces you touch every day.", "button_label": "Learn more" } }
+      },
+      "block_order": ["p1", "p2", "p3"],
+      "settings": {}
+    },
+    "proof": {
+      "type": "proof",
+      "blocks": {
+        "rs1": { "type": "rotator_slide", "settings": { "image_class": "p-kitchen", "title": "Kitchen cleaner", "note": "Foam lifts grease, no scrubbing" } },
+        "rs2": { "type": "rotator_slide", "settings": { "image_class": "p-tap", "title": "Tap & limescale", "note": "Melts hard water stains" } },
+        "rs3": { "type": "rotator_slide", "settings": { "image_class": "p-laundry", "title": "Laundry detergent", "note": "Tough on odour, soft on fabric" } },
+        "rs4": { "type": "rotator_slide", "settings": { "image_class": "p-toilet", "title": "Toilet cleaner", "note": "Kills 99.9% of germs" } },
+        "rs5": { "type": "rotator_slide", "settings": { "image_class": "p-floor", "title": "Floor cleaner", "note": "Neem powered, pet safe" } },
+        "rs6": { "type": "rotator_slide", "settings": { "image_class": "p-dish", "title": "Dishwash gel", "note": "Cuts grease, kind to hands" } },
+        "st1": { "type": "stat", "settings": { "value": "99.9%", "title": "Germ kill", "text": "Tested against germs and bacteria" } },
+        "st2": { "type": "stat", "settings": { "value": "0%", "title": "Sulphates", "text": "No SLS, chlorine or parabens" } },
+        "st3": { "type": "stat", "settings": { "value": "100%", "title": "Plant based", "text": "Cleansers derived from plants" } },
+        "st4": { "type": "stat", "settings": { "value": "4.8", "title": "Rated", "text": "Across 8,000+ verified reviews" } }
+      },
+      "block_order": ["rs1", "rs2", "rs3", "rs4", "rs5", "rs6", "st1", "st2", "st3", "st4"],
+      "settings": {}
+    },
+    "combos": {
+      "type": "combos",
+      "blocks": {
+        "c1": {
+          "type": "combo_card",
+          "settings": {
+            "title": "Kitchen & Bath set",
+            "kicker": "2 bottles + 2 refills",
+            "save_label": "Save ₹150",
+            "price": "₹699",
+            "compare_price": "₹849",
+            "badge": "hero",
+            "pill_1_text": "Kitchen",
+            "pill_2_text": "Bathroom"
+          }
+        },
+        "c2": {
+          "type": "combo_card",
+          "settings": {
+            "title": "Whole Home kit",
+            "kicker": "5 bottles + 5 refills",
+            "save_label": "Save ₹400",
+            "price": "₹1,499",
+            "compare_price": "₹1,899",
+            "pill_1_text": "Kitchen",
+            "pill_2_text": "Bathroom",
+            "pill_3_text": "Floor"
+          }
+        }
+      },
+      "block_order": ["c1", "c2"],
+      "settings": {}
+    },
+    "bundles": {
+      "type": "bundles",
+      "blocks": {
+        "t1": {
+          "type": "tier",
+          "settings": {
+            "tag": "Starter",
+            "product_count": 2,
+            "price": "₹399",
+            "compare_price": "₹499",
+            "per_product_note": "Just ₹199/bottle",
+            "feature_1": "Any 2 cleaners"
+          }
+        },
+        "t2": {
+          "type": "tier",
+          "settings": {
+            "tag": "Most Popular",
+            "is_featured": true,
+            "product_count": 3,
+            "price": "₹499",
+            "compare_price": "₹699",
+            "per_product_note": "Just ₹166/bottle",
+            "feature_1": "Any 3 cleaners",
+            "feature_2": "Free shipping"
+          }
+        },
+        "t3": {
+          "type": "tier",
+          "settings": {
+            "tag": "Whole Home",
+            "product_count": 5,
+            "price": "₹799",
+            "compare_price": "₹1,099",
+            "per_product_note": "Just ₹159/bottle",
+            "feature_1": "Any 5 cleaners",
+            "feature_2": "Free shipping",
+            "feature_3": "Free spray bottle"
+          }
+        }
+      },
+      "block_order": ["t1", "t2", "t3"],
       "settings": {}
     },
     "featured_products": {
       "type": "featured-products",
       "settings": {}
     },
-    "combos": {
-      "type": "combos",
+    "full_range": {
+      "type": "full-range",
+      "blocks": {
+        "p1": { "type": "product_image", "settings": { "image_class": "p-floor", "alt_text": "Floor cleaner" } },
+        "p2": { "type": "product_image", "settings": { "image_class": "p-tap", "alt_text": "Tap cleaner" } },
+        "p3": { "type": "product_image", "settings": { "image_class": "p-kitchen", "alt_text": "Kitchen cleaner" } },
+        "p4": { "type": "product_image", "settings": { "image_class": "p-toilet", "alt_text": "Toilet cleaner" } },
+        "p5": { "type": "product_image", "settings": { "image_class": "p-laundry", "alt_text": "Laundry detergent" } },
+        "p6": { "type": "product_image", "settings": { "image_class": "p-dish", "alt_text": "Dishwash gel" } },
+        "p7": { "type": "product_image", "settings": { "image_class": "p-metal", "alt_text": "Metal cleaner" } },
+        "p8": { "type": "product_image", "settings": { "image_class": "p-wm", "alt_text": "Washing machine descaler" } },
+        "p9": { "type": "product_image", "settings": { "image_class": "p-handwash", "alt_text": "Liquid handwash" } },
+        "p10": { "type": "product_image", "settings": { "image_class": "p-eraser", "alt_text": "Magic eraser" } }
+      },
+      "block_order": ["p1", "p2", "p3", "p4", "p5", "p6", "p7", "p8", "p9", "p10"],
       "settings": {}
     },
-    "bundles": {
-      "type": "bundles",
+    "why_bundles": {
+      "type": "why-bundles",
+      "blocks": {
+        "b1": { "type": "benefit", "settings": { "icon": "save", "title": "Save up to 45%", "text": "Versus buying the same products separately" } },
+        "b2": { "type": "benefit", "settings": { "icon": "check", "title": "One flat price", "text": "No calculators, no comparing carts" } },
+        "b3": { "type": "benefit", "settings": { "icon": "star", "title": "Curated by experts", "text": "Products picked to work well together" } },
+        "b4": { "type": "benefit", "settings": { "icon": "truck", "title": "Free shipping always", "text": "Included on every bundle, all India" } }
+      },
+      "block_order": ["b1", "b2", "b3", "b4"],
       "settings": {}
     },
-    "reviews": {
-      "type": "reviews",
+    "categories": {
+      "type": "categories",
+      "blocks": {
+        "c1": { "type": "category", "settings": { "image_class": "p-kitchen", "title": "Kitchen bundle", "text": "Grease, dishes & more", "link": "#combos" } },
+        "c2": { "type": "category", "settings": { "image_class": "p-toilet", "title": "Bathroom bundle", "text": "Deep clean & disinfect", "link": "#combos" } },
+        "c3": { "type": "category", "settings": { "image_class": "p-laundry", "title": "Laundry bundle", "text": "Softer, fresher wash", "link": "#combos" } },
+        "c4": { "type": "category", "settings": { "image_class": "p-tap", "title": "Hard water bundle", "text": "Melt away limescale", "link": "#combos" } }
+      },
+      "block_order": ["c1", "c2", "c3", "c4"],
+      "settings": {}
+    },
+    "trust_bar": {
+      "type": "trust-bar",
+      "blocks": {
+        "t1": { "type": "trust_item", "settings": { "icon": "leaf", "text": "Plant derived\nformulas" } },
+        "t2": { "type": "trust_item", "settings": { "icon": "box", "text": "Recyclable\npackaging" } },
+        "t3": { "type": "trust_item", "settings": { "icon": "heart", "text": "Safe for\nkids & pets" } },
+        "t4": { "type": "trust_item", "settings": { "icon": "globe", "text": "Made in\nIndia" } }
+      },
+      "block_order": ["t1", "t2", "t3", "t4"],
+      "settings": {}
+    },
+    "signup": {
+      "type": "signup",
       "settings": {}
     }
   },
   "order": [
     "hero",
-    "featured_products",
+    "reviews",
+    "ingredients",
+    "pillars",
+    "proof",
     "combos",
     "bundles",
-    "reviews"
+    "featured_products",
+    "full_range",
+    "why_bundles",
+    "categories",
+    "trust_bar",
+    "signup"
   ]
 }
